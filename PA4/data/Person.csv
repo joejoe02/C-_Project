@@ -1,3 +1,7 @@
 Name,Life,Strength,Intelligence,Gender,Fear,IsInvestigator,Terror
-Person,9,6,3,Mama,6,true,2
-Pall,9,9,9,Male,6,true,3
+Odinn,3,4,3,Male,5
+Odinn,3,4,3,Male,5
+Petur,4,10,5,Male,4,true,2
+Odinn,3,4,3,Male,5
+Odinn,3,4,3,Male,5
+Petur,4,10,5,Male,4,true,2

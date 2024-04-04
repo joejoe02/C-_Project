@@ -63,12 +63,7 @@ void loadCharactersFromPersonsCSV(const string& filename) {
             }
         }
 
-        // Debugging output
-        cout << "Name: " << name << ", Life: " << life << ", Strength: " << strength
-             << ", Intelligence: " << intelligence << ", Gender: " << gender
-             << ", Fear: " << fear << ", IsInvestigator: " << (isInvestigator ? "true" : "false")
-             << ", Terror: " << terror << endl;
-
+        cout << "Loading character/Investigator..." << endl;
         // Create Person or Investigator based on isInvestigator value
         if (isInvestigator) {
             characters.push_back(new Investigator(name, life, strength, intelligence, gender, fear, terror));
@@ -151,6 +146,7 @@ void loadEldritchHorrorsFromCSV(const string& filename) {
         ss >> traumatism;
 
         // Creating and adding the EldritchHorror object
+        cout << "Loading Eldritch Horror from line: " << line << endl;
         characters.push_back(new EldritchHorror(name, life, strength, intelligence, unnatural, disquiet, traumatism));
     }
 
@@ -159,15 +155,18 @@ void loadEldritchHorrorsFromCSV(const string& filename) {
 
 
 
-// Placeholder implementations for other load functions
-// void loadCreaturesFromCSV(const string& filename) { /* ... */ }
-// void loadEldritchHorrorsFromCSV(const string& filename) { /* ... */ }
-// void loadCreaturesFromCSV(const string& filename) { /* ... */ }
-
 void loadAllCharacters() {
+    for (auto character : characters) {
+        delete character;
+    }
+
+    characters.clear();
+
     loadCharactersFromPersonsCSV("data/Person.csv");    
     loadCreaturesFromCSV("data/Creature.csv");
     loadEldritchHorrorsFromCSV("data/EldritchHorror.csv");
+
+
 }
 
 void saveAllCharacters() {
@@ -209,9 +208,7 @@ void saveAllCharacters() {
     creaturesFile.close();
     eldritchHorrorsFile.close();
 
-    for (auto character : characters) {
-        delete character;
-    }
+
 
     cout << "All characters saved successfully." << endl;
 }
@@ -226,35 +223,36 @@ void printAllCharacterDetails() {
 void showMainMenu() {
     int choice = 0;
     while (true) {
-        cout << "\nMain Menu\n";
+        cout << "=====================================\n";
+        cout << "           MAIN MENU\n";
+        cout << "=====================================\n";
         cout << "1. Create a character\n";
         cout << "2. Save characters to a file\n";
         cout << "3. Load characters from a file\n";
         cout << "4. Print all character details\n";
         cout << "5. Exit\n";
-        cout << "Enter your choice: ";
+        cout << "\nPlease, select an option (1-5): ";
         cin >> choice;
         cin.ignore(); // Clearing the newline character
 
         switch(choice) {
             case 1: {
-                cout << "\nCreate a character";
-                cout << "\n1. Create a person";
-                cout << "\n2. Create an investigator";
-                cout << "\n3. Create a creature";
-                cout << "\n4. Create an eldritch horror";
-                cout << "\n5. Back to main menu\n";
-
-                cout << "Enter your choice: ";
+                cout << "\n=====================================\n";
+                cout << "       CREATE A CHARACTER\n";
+                cout << "=====================================\n";
+                cout << "1. Create a person\n";
+                cout << "2. Create an investigator\n";
+                cout << "3. Create a creature\n";
+                cout << "4. Create an eldritch horror\n";
+                cout << "5. Back to main menu\n";
+                cout << "\nSelect the type of character to create (1-5): ";
                 int creationChoice;
                 cin >> creationChoice;
                 cin.ignore(); // Clearing the newline character
 
                 switch(creationChoice) {
                     case 1: {
-                        // Simplified example - replace with actual creation logic
                         cout << "Creating a Person...\n";
-                        // Assuming createPerson() gathers user input and returns a new Person instance
                         Person* newPerson = Person::createPerson();
                         characters.push_back(newPerson);
                         break;
@@ -293,7 +291,7 @@ void showMainMenu() {
                 break;
             case 4:
                 printAllCharacterDetails();
-                break; // Exit the loop, effectively ending the program
+                break; 
             case 5:
                 cout << "Exiting program...\n";
                 return;

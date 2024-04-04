@@ -32,10 +32,10 @@ Person* Person::createPerson() {
     int intelligence = rand() % 11; // Intelligence (0-10)
     int fear = rand() % 11; // Fear (0-10)
 
-    cout << "Enter the name of the person: ";
+    cout << "\nEnter the name of the person: ";
     getline(cin, name);
 
-    cout << "Enter gender: ";
+    cout << "\nEnter gender: ";
     getline(cin, gender);
 
     return new Person(name, life, strength, intelligence, gender, fear);

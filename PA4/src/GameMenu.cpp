@@ -106,7 +106,7 @@ void loadCreaturesFromCSV(const string& filename) {
         ss >> disquiet;
 
         // Creating and adding the Creature object
-        characters.push_back(new Creature(name, life, strength, intelligence, unnatural, disquiet));
+        characters.push_back(new Creature("", name, life, strength, intelligence, unnatural, disquiet));
 
 
     }

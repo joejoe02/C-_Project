@@ -2,38 +2,41 @@
 #define CREATURE_H
 
 #include "Being.h"
-using namespace std;
+#include <string>
+#include <map>
+
+// Forward declaration to avoid circular dependencies, if necessary
+class Being;
 
 class Creature : public Being {
-protected:
-    bool unnatural; // True if the creature is unnatural, false otherwise
-    int disquiet; // The disquiet of the creature
+private:
+    static std::map<std::string, int> nameCounts; // Tracks the number of each creature type
+    bool unnatural; // Indicates if the creature is unnatural
+    int disquiet; // Represents the disquiet of the creature
+
+    // Helper function to generate a unique name for the creature
+    std::string generateName(const std::string& type);
 
 public:
+    // Constructor with default parameters, allowing for optional specification of all attributes
+    Creature(const std::string& type = "", const std::string& name = "", int life = 0, int strength = 0, int intelligence = 0, bool unnatural = false, int disquiet = 0);
 
-    // Constructor
-    Creature(const string& name, int life, int strength, int intelligence, bool unnatural, int disquiet);
-
-    // Destructor
+    // Virtual destructor to allow for proper cleanup in derived classes
     virtual ~Creature();
-    string getType() const override { return "Creature";}
 
-    // Get the unnatural attribute of the creature
+    // Setters and getters for 'unnatural' and 'disquiet' attributes
     void setUnnatural(bool newUnnatural);
     bool getUnnatural() const;
-
-    // Get the disquiet of the creature
     void setDisquiet(int newDisquiet);
     int getDisquiet() const;
-
-    // Create a creature
+    void setName(const std::string& newName);
+    // Static method to create a creature; implementation might involve user input or other logic
     static Creature* createCreature();
 
+    // Override to print details specific to `Creature`
     void printDetails() const override;
 
+    // Additional creature-specific methods here...
 };
-
-
-
 
 #endif // CREATURE_H

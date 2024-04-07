@@ -11,11 +11,44 @@
 using namespace std;
 
 extern vector<Being*> characters;
+vector<Item> items;
 
 void loadCharactersFromPersonsCSV(const string& filename);
 void loadCreaturesFromCSV(const string& filename);
 void loadEldritchHorrorsFromCSV(const string& filename);
 void loadAllCharacters();
+void loadAllItems(const string& filename);
+
+void loadAllItems(const string& filename) {
+    ifstream file(filename);
+    if (!file.is_open()) {
+        cerr << "Unable to open file for reading: " << filename << endl;
+        return;
+    }
+
+    string header;
+    getline(file, header);
+
+    string line;
+    while (getline(file, line)) {
+        stringstream ss(line);
+        string name, typeStr, description;
+        int effectStrength, effectFear;
+
+        getline(ss, name, ',');
+        getline(ss, typeStr, ',');
+        getline(ss, description, ',');
+        ss >> effectStrength;
+        ss.ignore(); // Ignore comma
+        ss >> effectFear;
+
+        ItemType type = stringToItemType(typeStr);
+
+        items.push_back(Item(name, type, description, effectStrength, effectFear));
+    }
+
+    file.close();
+};
 
 
 void loadCharactersFromPersonsCSV(const string& filename) {
@@ -219,6 +252,65 @@ void printAllCharacterDetails() {
     }
 }
 
+void printAllItems() {
+    cout << "Items\n";
+    cout << "---------------------------------------------------------------\n"; // Header
+    for (const Item& item : items) {
+        cout << "Name           : " << item.getName() << "\n";
+        cout << "Type           : " << static_cast<int>(item.getType()) << "\n";
+        cout << "Description    : " << item.getDescription() << "\n";
+        cout << "Effect Strength: " << item.getEffectStrength() << "\n";
+        cout << "Effect Fear    : " << item.getEffectFear() << "\n";
+        cout << "---------------------------------------------------------------\n"; // Separator
+    }
+
+}
+
+void initiateCombat() {
+    cout << "Initiating combat...\n";
+    cout << "Select the attacker:\n";
+    cout << "Enter the name of the attacker: ";
+    string attackerName;
+    getline(cin, attackerName);
+
+    cout << "Enter the name of the target: ";
+    string targetName;
+    getline(cin, targetName);
+
+    // Find the attacker and target in the characters vector
+    Being* attacker = nullptr;
+    Being* target = nullptr;
+    for (Being* character : characters) {
+        if (character->getName() == attackerName) {
+            attacker = character;
+        }
+        if (character->getName() == targetName) {
+            target = character;
+        }
+    }
+
+    if (attacker && target) {
+        cout << "Attacker and target found.\n";
+        cout << "Attacker: " << attacker->getName() << attacker->getLife() << endl;
+    } else {
+        cout << "Attacker or target not found.\n";
+    }
+
+    // // Perform combat if both attacker and target are found
+    // if (attacker && target) {
+    //     // Choose a weapon (you can implement this part if needed)
+    //     Item weapon = chooseWeapon();
+
+    //     // Perform combat
+    //     CombatMechanics::performCombat(attacker, target, weapon);
+    //     cout << attackerName << " attacks " << targetName << " with " << weapon.getName() << endl;
+    //     cout << "Result: " << targetName << "'s life: " << target->getLife() << endl;
+    // } else {
+    //     cout << "Attacker or target not found.\n";
+    // }
+    // break;
+}
+
 
 void showMainMenu() {
     int choice = 0;
@@ -230,8 +322,10 @@ void showMainMenu() {
         cout << "2. Save characters to a file\n";
         cout << "3. Load characters from a file\n";
         cout << "4. Print all character details\n";
-        cout << "5. Exit\n";
-        cout << "\nPlease, select an option (1-5): ";
+        cout << "5. Print all Items details\n"; // Added this option to the menu
+        cout << "6. Attack\n"; // Added this option to the menu
+        cout << "7. Exit\n";
+        cout << "\nPlease, select an option (1-6): ";
         cin >> choice;
         cin.ignore(); // Clearing the newline character
 
@@ -293,7 +387,13 @@ void showMainMenu() {
                 printAllCharacterDetails();
                 break; 
             case 5:
-                cout << "Exiting program...\n";
+                loadAllItems("data/Items.csv");
+                printAllItems();
+                break;
+            case 6:
+                initiateCombat();
+            case 7:
+                cout << "Exiting the program...\n";
                 return;
             default:
                 cout << "Invalid choice. Please try again.\n";

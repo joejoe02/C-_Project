@@ -6,5 +6,6 @@
 #include "Person.h"
 #include "Investigator.h"
 #include "EldritchHorror.h"
+#include "Items.h"
 
 #endif // GAME_ENTITIES_H

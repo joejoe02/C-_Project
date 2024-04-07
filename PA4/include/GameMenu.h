@@ -6,6 +6,7 @@
 #include "GameEntities.h" // Includes Being, Person, Creature, etc.
 
 extern std::vector<Being*> characters;
+extern std::vector<Item> items;
 
 void savePerson(const Person* person);
 void saveInvestigator(const Investigator* investigator);
@@ -18,5 +19,9 @@ void loadEldritchHorrorsFromCSV(const std::string& filename);
 
 void loadAllCharacters();
 void showMainMenu();
+
+void loadAllItems(const std::string& filename);
+void displayItems();
+
 
 #endif // GAME_MENU_H

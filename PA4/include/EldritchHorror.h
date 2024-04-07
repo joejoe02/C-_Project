@@ -16,6 +16,10 @@ public:
     void setTraumatism(int newTraumatism);
     int getTraumatism() const;
 
+    void takeDamage(int damage) override {
+        life -= damage;
+    };
+
     // Create an eldritch horror
     static EldritchHorror* createEldritchHorror();
 

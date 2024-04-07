@@ -1,0 +1,6 @@
+Name,Type,Description,effectStrength,effectFear
+Sword of Courage,Weapon,A sturdy sword that emboldens the wielder,5,-2
+Ancient Spellbook,Spellbook,A tome containing forgotten spells,0,0
+Healing Potion,Potion,A small vial that restores health,0,10
+Fireball Scroll,Spellbook,A scroll that allows casting a powerful fireball,10,0
+Elixir of Might,Potion,A potion that temporarily increases strength,7,0

@@ -24,6 +24,10 @@ public:
     // Virtual destructor to allow for proper cleanup in derived classes
     virtual ~Creature();
 
+    void takeDamage(int damage) override {
+        life -= damage;
+    };
+
     // Setters and getters for 'unnatural' and 'disquiet' attributes
     void setUnnatural(bool newUnnatural);
     bool getUnnatural() const;

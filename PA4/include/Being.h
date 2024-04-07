@@ -21,6 +21,8 @@ public:
 
     virtual void printDetails() const;
 
+    virtual void takeDamage(int damage) = 0;
+
     // Get the life of the being
     void setLife(int newLife);
     int getLife() const;

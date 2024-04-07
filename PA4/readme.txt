@@ -1,6 +1,5 @@
 To compile:
-g++ -o game src/main.cpp src/Being.cpp src/Person.cpp src/Creature.cpp src/EldritchHorror.cpp src/Investigator.cpp src/GameMenu.cpp -Iinclude
-
+g++ -o game src/main.cpp src/Being.cpp src/Person.cpp src/Creature.cpp src/EldritchHorror.cpp src/Investigator.cpp src/GameMenu.cpp src/Items.cpp src/CombatMechanics.cpp -Iinclude
 To run:
 ./game
 

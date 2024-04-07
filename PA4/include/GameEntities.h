@@ -7,5 +7,6 @@
 #include "Investigator.h"
 #include "EldritchHorror.h"
 #include "Items.h"
+#include "CombatMechanics.h"
 
 #endif // GAME_ENTITIES_H

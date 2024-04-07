@@ -49,6 +49,13 @@ string Being::getName() const {
     return name;
 }
 
+void Being::takeDamage(int damage) {
+    if (damage > life) {
+        life = 0;
+    } else {
+        life -= damage;
+    }
+}
 
 void Being::printDetails() const {
     cout << "---------------------- Being Details ----------------------\n";

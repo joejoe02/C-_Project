@@ -289,27 +289,20 @@ void initiateCombat() {
         }
     }
 
+    // Perform combat if both attacker and target are found
     if (attacker && target) {
-        cout << "Attacker and target found.\n";
-        cout << "Attacker: " << attacker->getName() << attacker->getLife() << endl;
+        // Choose a weapon (you can implement this part if needed)
+        Item weapon = CombatMechanics::chooseWeapon(items);
+
+        // Perform combat
+        CombatMechanics::performCombat(attacker, target, weapon);
+        cout << attackerName << " attacks " << targetName << " with " << weapon.getName() << endl;
+        cout << "Result: " << targetName << "'s life: " << target->getLife() << endl;
     } else {
         cout << "Attacker or target not found.\n";
     }
-
-    // // Perform combat if both attacker and target are found
-    // if (attacker && target) {
-    //     // Choose a weapon (you can implement this part if needed)
-    //     Item weapon = chooseWeapon();
-
-    //     // Perform combat
-    //     CombatMechanics::performCombat(attacker, target, weapon);
-    //     cout << attackerName << " attacks " << targetName << " with " << weapon.getName() << endl;
-    //     cout << "Result: " << targetName << "'s life: " << target->getLife() << endl;
-    // } else {
-    //     cout << "Attacker or target not found.\n";
-    // }
-    // break;
 }
+
 
 
 void showMainMenu() {

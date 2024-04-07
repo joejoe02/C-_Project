@@ -49,6 +49,8 @@ int Creature::getDisquiet() const {
     return disquiet;
 }
 
+
+
 Creature* Creature::createCreature() {
     std::string type; // This is now considered 'type' instead of 'name'
     std::cout << "Enter the type of the creature: ";

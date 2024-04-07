@@ -41,6 +41,8 @@ Person* Person::createPerson() {
     return new Person(name, life, strength, intelligence, gender, fear);
 }
 
+
+
 // Print the details of the person
 void Person::printDetails() const {
     cout << "----------------------- Person Details -----------------------\n";

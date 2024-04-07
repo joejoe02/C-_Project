@@ -5,11 +5,14 @@
 
 #include "GameEntities.h" // Include necessary headers for game entities and items
 #include "Items.h"
+#include <vector>
 
 class CombatMechanics {
 public:
     // Function to handle combat between characters
     static void performCombat(Being* attacker, Being* target, const Item& weapon);
+    static Item chooseWeapon(const vector<Item>& items);
+
 
 private:
     static int calculateDamage(Being* attacker, Being* target, const Item& weapon);

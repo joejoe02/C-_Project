@@ -7,6 +7,7 @@
 #include <limits>
 #include <typeinfo>
 #include <algorithm>
+#include "updateCSV.h"
 
 using namespace std;
 
@@ -268,39 +269,50 @@ void printAllItems() {
 
 void initiateCombat() {
     cout << "Initiating combat...\n";
-    cout << "Select the attacker:\n";
-    cout << "Enter the name of the attacker: ";
-    string attackerName;
-    getline(cin, attackerName);
 
-    cout << "Enter the name of the target: ";
-    string targetName;
-    getline(cin, targetName);
-
-    // Find the attacker and target in the characters vector
-    Being* attacker = nullptr;
-    Being* target = nullptr;
-    for (Being* character : characters) {
-        if (character->getName() == attackerName) {
-            attacker = character;
-        }
-        if (character->getName() == targetName) {
-            target = character;
-        }
+    // Display the list of characters with numbers
+    cout << "Available characters:\n";
+    for (size_t i = 0; i < characters.size(); ++i) {
+        cout << i + 1 << ". " << characters[i]->getName() << endl;
     }
 
-    // Perform combat if both attacker and target are found
-    if (attacker && target) {
-        // Choose a weapon (you can implement this part if needed)
-        Item weapon = CombatMechanics::chooseWeapon(items);
-
-        // Perform combat
-        CombatMechanics::performCombat(attacker, target, weapon);
-        cout << attackerName << " attacks " << targetName << " with " << weapon.getName() << endl;
-        cout << "Result: " << targetName << "'s life: " << target->getLife() << endl;
-    } else {
-        cout << "Attacker or target not found.\n";
+    // Select the attacker
+    cout << "Select the attacker (enter the corresponding number): ";
+    int attackerIndex;
+    cin >> attackerIndex;
+    cin.ignore(); // Ignore newline character
+    if (attackerIndex < 1 || attackerIndex > characters.size()) {
+        cout << "Invalid attacker selection.\n";
+        return;
     }
+    Being* attacker = characters[attackerIndex - 1];
+
+    // Select the target
+    cout << "Select the target (enter the corresponding number): ";
+    int targetIndex;
+    cin >> targetIndex;
+    cin.ignore(); // Ignore newline character
+    if (targetIndex < 1 || targetIndex > characters.size() || targetIndex == attackerIndex) {
+        cout << "Invalid target selection.\n";
+        return;
+    }
+    Being* target = characters[targetIndex - 1];
+
+    // Display attacker and target details
+    cout << "Attacker: " << attacker->getName() << endl;
+    cout << "Target: " << target->getName() << " (Life: " << target->getLife();
+    
+    // Check if the attacker is a Person and display fear
+    if (auto person = dynamic_cast<Person*>(attacker)) {
+        cout << ", Fear: " << person->getFear();
+    }
+    cout << ")\n";
+
+    // Choose a weapon (you can implement this part if needed)
+    Item weapon = CombatMechanics::chooseWeapon(items);
+
+    // Perform combat
+    CombatMechanics::performCombat(attacker, target, weapon);
 }
 
 
@@ -385,6 +397,7 @@ void showMainMenu() {
                 break;
             case 6:
                 initiateCombat();
+                break;
             case 7:
                 cout << "Exiting the program...\n";
                 return;

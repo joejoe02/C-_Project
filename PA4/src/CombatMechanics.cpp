@@ -1,8 +1,7 @@
 // CombatMechanics.cpp
 #include <cstdlib>
 #include <ctime>
-
-#include "CombatMechanics.h"
+#include "GameEntities.h"
 
 void CombatMechanics::performCombat(Being* attacker, Being* target, const Item& weapon) {
     
@@ -14,6 +13,26 @@ void CombatMechanics::performCombat(Being* attacker, Being* target, const Item& 
     // Apply damage to the target
     target->takeDamage(damage);
 
+    cout << "Result: " << target->getName() << "'s life: " << target->getLife() << endl;
+
+    // Update the CSV file with the new life value of the target
+    if (auto person = dynamic_cast<Person*>(target)) {
+        updatePersonCSV("data/Person.csv", person);
+    }
+    else if (auto creature = dynamic_cast<Creature*>(target)) {
+        updateCreatureCSV("data/Creature.csv", creature);
+    }
+    else if (auto eldritchHorror = dynamic_cast<EldritchHorror*>(target)) {
+        updateEldritchHorrorCSV("data/Eldritch_horror.csv", eldritchHorror);
+    }
+    else {
+        cout << "Unknown target type. Unable to update CSV file.\n";
+    }
+
+
+
+
+    cout << attacker->getName() << " attacks " << target->getName() << " with " << weapon.getName() << endl;
     cout << "Result: " << target->getName() << "'s life: " << target->getLife() << endl;
 }
 

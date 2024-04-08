@@ -1,6 +1,9 @@
 #include "Person.h"
 #include <iostream>
 #include <cstdlib> // For rand()
+#include <fstream>
+
+using namespace std;
 
 // Person constructor implementation
 Person::Person(const string& name, int life, int strength, int intelligence, const string& gender, int fear)

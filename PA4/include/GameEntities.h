@@ -8,5 +8,6 @@
 #include "EldritchHorror.h"
 #include "Items.h"
 #include "CombatMechanics.h"
+#include "updateCSV.h"
 
 #endif // GAME_ENTITIES_H

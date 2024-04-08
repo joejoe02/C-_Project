@@ -1,6 +1,7 @@
 #include "EldritchHorror.h"
 #include <iostream>
 #include <cstdlib> // For rand()
+#include <fstream>
 
 EldritchHorror::EldritchHorror(const std::string& name, int life, int strength, int intelligence, bool unnatural, int disquiet, int traumatism)
 : Creature("", name, life, strength, intelligence, unnatural, disquiet), traumatism(traumatism) {}

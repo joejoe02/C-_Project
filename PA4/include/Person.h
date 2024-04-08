@@ -16,7 +16,10 @@ public:
     string getType() const override { return "Person";}
 
     void takeDamage(int damage) override {
-        life -= damage;
+        if (damage > life)
+            life = 0;
+        else
+            life -= damage;
     };
 
     void setGender(const string& newGender);

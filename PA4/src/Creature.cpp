@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cstdlib> // For rand()
 #include <map>
+#include <fstream>
 
 // Initialize the static nameCounts map
 std::map<std::string, int> Creature::nameCounts;

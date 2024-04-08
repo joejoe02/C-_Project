@@ -299,8 +299,8 @@ void initiateCombat() {
     Being* target = characters[targetIndex - 1];
 
     // Display attacker and target details
-    cout << "Attacker: " << attacker->getName() << endl;
-    cout << "Target: " << target->getName() << " (Life: " << target->getLife();
+    cout << "Attacker: " << attacker->getType() << " " << attacker->getName() << "\n" << endl;
+    cout << "Target: " << target->getName() << " (Life: " << target->getLife() << "\n";
     
     // Check if the attacker is a Person and display fear
     if (auto person = dynamic_cast<Person*>(attacker)) {

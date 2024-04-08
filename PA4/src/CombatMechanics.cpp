@@ -32,8 +32,8 @@ void CombatMechanics::performCombat(Being* attacker, Being* target, const Item& 
 
 
 
-    cout << attacker->getName() << " attacks " << target->getName() << " with " << weapon.getName() << endl;
-    cout << "Result: " << target->getName() << "'s life: " << target->getLife() << endl;
+    // cout << attacker->getName() << " attacks " << target->getName() << " with " << weapon.getName() << endl;
+    // cout << "Result: " << target->getName() << "'s life: " << target->getLife() << endl;
 }
 
 
@@ -53,7 +53,7 @@ Item CombatMechanics::chooseWeapon(const vector<Item>& items) {
      // Display available weapons to the user
     cout << "Available weapons:\n";
     for (size_t i = 0; i < items.size(); ++i) {
-        cout << i + 1 << ". " << items[i].getName() << endl;
+        cout << i + 1 << ". " << items[i].getName() << " (Effect strength :" << items[i].getEffectStrength() << " Effect fear: " << items[i].getEffectFear() << ")" << endl;
     }
 
     if (items.empty()) {

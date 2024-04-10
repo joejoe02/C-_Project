@@ -8,6 +8,7 @@
 #include <typeinfo>
 #include <algorithm>
 #include "updateCSV.h"
+#include "ErrorCheck.h"
 
 using namespace std;
 
@@ -315,8 +316,6 @@ void initiateCombat() {
     CombatMechanics::performCombat(attacker, target, weapon);
 }
 
-
-
 void showMainMenu() {
     int choice = 0;
     while (true) {
@@ -331,8 +330,7 @@ void showMainMenu() {
         cout << "6. Attack\n"; // Added this option to the menu
         cout << "7. Exit\n";
         cout << "\nPlease, select an option (1-6): ";
-        cin >> choice;
-        cin.ignore(); // Clearing the newline character
+        int choice = getNumericInput(1, 7, "Please, select an option (1-7): ");
 
         switch(choice) {
             case 1: {
@@ -345,9 +343,7 @@ void showMainMenu() {
                 cout << "4. Create an eldritch horror\n";
                 cout << "5. Back to main menu\n";
                 cout << "\nSelect the type of character to create (1-5): ";
-                int creationChoice;
-                cin >> creationChoice;
-                cin.ignore(); // Clearing the newline character
+                int creationChoice = getNumericInput(1, 5, "Select the type of character to create (1-5): ");
 
                 switch(creationChoice) {
                     case 1: {

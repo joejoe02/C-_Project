@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cstdlib> // For rand()
 #include <fstream>
+#include "ErrorCheck.h"
 
 EldritchHorror::EldritchHorror(const std::string& name, int life, int strength, int intelligence, bool unnatural, int disquiet, int traumatism)
 : Creature("", name, life, strength, intelligence, unnatural, disquiet), traumatism(traumatism) {}
@@ -18,17 +19,15 @@ int EldritchHorror::getTraumatism() const {
 
 // Creating an eldritch horror using random values
 EldritchHorror* EldritchHorror::createEldritchHorror() {
-    string name;
-    cout << "Enter the name of the eldritch horror: ";
-    getline(cin, name);
-
+    std::string name = getStringInput("Enter the name of the eldritch horror: ");
     int life = rand() % 11;
     int strength = rand() % 11;
     int intelligence = rand() % 11;
-    int traumatism = rand() % 4; // 0-3
+    int traumatism = rand() % 4;  // 0-3
 
     return new EldritchHorror(name, life, strength, intelligence, true, 10, traumatism);
 }
+
 
 void EldritchHorror::printDetails() const {
     Creature::printDetails(); // Call to Creature's printDetails to print common details

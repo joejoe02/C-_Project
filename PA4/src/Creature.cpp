@@ -3,6 +3,7 @@
 #include <cstdlib> // For rand()
 #include <map>
 #include <fstream>
+#include "ErrorCheck.h"
 
 // Initialize the static nameCounts map
 std::map<std::string, int> Creature::nameCounts;
@@ -53,19 +54,16 @@ int Creature::getDisquiet() const {
 
 
 Creature* Creature::createCreature() {
-    std::string type; // This is now considered 'type' instead of 'name'
-    std::cout << "Enter the type of the creature: ";
-    std::getline(std::cin, type);
+    std::string type = getStringInput("Enter the type of the creature: ");
+    int life = rand() % 11;
+    int strength = rand() % 11;
+    int intelligence = rand() % 11;
+    bool unnatural = rand() % 2;  // 0 or 1
+    int disquiet = rand() % 11;
 
-    int life = rand() % 11; // Life (0-10)
-    int strength = rand() % 11; // Strength (0-10)
-    int intelligence = rand() % 11; // Intelligence (0-10)
-    bool unnatural = rand() % 2; // 0 or 1
-    int disquiet = rand() % 11; // Disquiet (0-10)
-
-    // Pass 'type' as the first argument, and leave 'name' as an empty string
     return new Creature(type, "", life, strength, intelligence, unnatural, disquiet);
 }
+
 
 
 void Creature::printDetails() const {

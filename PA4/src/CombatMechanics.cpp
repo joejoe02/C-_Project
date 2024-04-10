@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "GameEntities.h"
+#include "ErrorCheck.h"
 
 void CombatMechanics::performCombat(Being* attacker, Being* target, const Item& weapon) {
     
@@ -49,28 +50,19 @@ int CombatMechanics::calculateDamage(Being* attacker, Being* target, const Item&
     return baseDamage;
 }
 
-Item CombatMechanics::chooseWeapon(const vector<Item>& items) {
-     // Display available weapons to the user
-    cout << "Available weapons:\n";
+Item CombatMechanics::chooseWeapon(const std::vector<Item>& items) {
+    // Display available weapons to the user
+    std::cout << "Available weapons:\n";
     for (size_t i = 0; i < items.size(); ++i) {
-        cout << i + 1 << ". " << items[i].getName() << " (Effect strength :" << items[i].getEffectStrength() << " Effect fear: " << items[i].getEffectFear() << ")" << endl;
+        std::cout << i + 1 << ". " << items[i].getName() << " (Effect strength: " << items[i].getEffectStrength() << ", Effect fear: " << items[i].getEffectFear() << ")\n";
     }
 
     if (items.empty()) {
-        cout << "No weapons available. Using default weapon.\n";
+        std::cout << "No weapons available. Using default weapon.\n";
         return Item("Fists", ItemType::Weapon, "Default weapon", 0, 0);
     }
 
-    // Prompt the user to choose a weapon
-    int choice;
-    cout << "Choose a weapon (1-" << items.size() << "): ";
-    cin >> choice;
-
-    // Validate the user's choice
-    if (choice >= 1 && choice <= static_cast<int>(items.size())) {
-        return items[choice - 1]; // Return the chosen weapon
-    } else {
-        cout << "Invalid choice. Using default weapon.\n";
-        return items.front(); // Return the first weapon by default
-    }
+    // Ask the user to choose a weapon, providing a prompt with the valid range
+    int choice = getNumericInput(1, items.size(), "Choose a weapon (1-" + std::to_string(items.size()) + "): ");
+    return items[choice - 1]; // Return the chosen weapon
 }

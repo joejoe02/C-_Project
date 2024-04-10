@@ -23,5 +23,6 @@ void showMainMenu();
 void loadAllItems(const std::string& filename);
 void displayItems();
 
+static int getNumericInput(int min, int max);
 
 #endif // GAME_MENU_H

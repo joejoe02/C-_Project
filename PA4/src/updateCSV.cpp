@@ -32,7 +32,7 @@ void updatePersonCSV(const string& filename, const Person* person) {
         string name;
         int life, strength, intelligence, fear;
         // Read the data from the line
-        // Assuming CSV format: name,life,strength,intelligence,gender,fear,is_investigator,terror
+        // using the CSV format: name,life,strength,intelligence,gender,fear,is_investigator,terror
         getline(ss, name, ',');
         ss >> life; ss.ignore();
         ss >> strength; ss.ignore();
@@ -46,7 +46,7 @@ void updatePersonCSV(const string& filename, const Person* person) {
             outFile << name << "," << person->getLife() << "," << person->getStrength() << ","
                     << person->getIntelligence() << "," << person->getGender() << "," << person->getFear();
             
-            // Check if the person is an Investigator
+            
             if (const Investigator* inv = dynamic_cast<const Investigator*>(person)) {
                 outFile << ",true," << inv->getTerror() << "\n";
             } else {
@@ -64,7 +64,7 @@ void updatePersonCSV(const string& filename, const Person* person) {
         outFile << person->getName() << "," << person->getLife() << "," << person->getStrength() << ","
                 << person->getIntelligence() << "," << person->getGender() << "," << person->getFear();
 
-        // Check if the person is an Investigator
+        
         if (const Investigator* inv = dynamic_cast<const Investigator*>(person)) {
             outFile << ",true," << inv->getTerror() << "\n";
         } else {
@@ -77,8 +77,8 @@ void updatePersonCSV(const string& filename, const Person* person) {
     outFile.close();
 
     // Replace the original file with the temporary file
-    remove(filename.c_str());  // Remove the original file
-    rename(tempFilename.c_str(), filename.c_str());  // Rename the temporary file
+    remove(filename.c_str());  
+    rename(tempFilename.c_str(), filename.c_str());  
 }
 
 
@@ -95,7 +95,7 @@ void updateCreatureCSV(const string& filename, const Creature* creature) {
     ofstream outFile(tempFilename);
     if (!outFile.is_open()) {
         cerr << "Unable to open temporary file for writing." << endl;
-        inFile.close();  // Close the input file
+        inFile.close();  
         return;
     }
 
@@ -107,14 +107,11 @@ void updateCreatureCSV(const string& filename, const Creature* creature) {
         stringstream ss(line);
         string name;
         int life, strength, intelligence, unnatural, disquiet;
-        // Read the data from the line
-        // Assuming CSV format: name,life,strength,intelligence,unnatural,disquiet
         getline(ss, name, ',');
         ss >> life; ss.ignore();
         ss >> strength; ss.ignore();
         ss >> intelligence; ss.ignore();
         ss >> unnatural; ss.ignore();
-        // Assuming the last field is disquiet
         ss >> disquiet;
 
         // Check if the current line corresponds to the creature being updated
@@ -122,7 +119,7 @@ void updateCreatureCSV(const string& filename, const Creature* creature) {
             // Update the data
             outFile << name << "," << creature->getLife() << "," << creature->getStrength() << ","
                     << creature->getIntelligence() << "," << creature->getUnnatural() << "," << creature->getDisquiet() << "\n";
-            updated = true;  // Set the flag to true
+            updated = true; 
         } else {
             // Write the original data to the temporary file
             outFile << line << endl;
@@ -135,13 +132,13 @@ void updateCreatureCSV(const string& filename, const Creature* creature) {
                 << creature->getIntelligence() << "," << creature->getUnnatural() << "," << creature->getDisquiet() << "\n";
     }
 
-    // Close both input and output files
+   
     inFile.close();
     outFile.close();
 
     // Replace the original file with the temporary file
-    remove(filename.c_str());  // Remove the original file
-    rename(tempFilename.c_str(), filename.c_str());  // Rename the temporary file
+    remove(filename.c_str());  
+    rename(tempFilename.c_str(), filename.c_str());  
 }
 
 void updateEldritchHorrorCSV(const string& filename, const EldritchHorror* horror) {
@@ -157,38 +154,33 @@ void updateEldritchHorrorCSV(const string& filename, const EldritchHorror* horro
     ofstream outFile(tempFilename);
     if (!outFile.is_open()) {
         cerr << "Unable to open temporary file for writing." << endl;
-        inFile.close();  // Close the input file
+        inFile.close();  
         return;
     }
 
     string line;
-    bool updated = false;  // Flag to track if the entry has been updated
+    bool updated = false;  
 
     // Read each line from the input file and update if necessary
     while (getline(inFile, line)) {
         stringstream ss(line);
         string name;
         int life, strength, intelligence, unnatural, disquiet, traumatism;
-        // Read the data from the line
-        // Assuming CSV format: name,life,strength,intelligence,unnatural,disquiet,traumatism
         getline(ss, name, ',');
         ss >> life; ss.ignore();
         ss >> strength; ss.ignore();
         ss >> intelligence; ss.ignore();
         ss >> unnatural; ss.ignore();
         ss >> disquiet; ss.ignore();
-        // Assuming the last field is traumatism
         ss >> traumatism;
 
         // Check if the current line corresponds to the horror being updated
         if (name == horror->getName()) {
-            // Update the data
             outFile << name << "," << horror->getLife() << "," << horror->getStrength() << ","
                     << horror->getIntelligence() << "," << horror->getUnnatural() << "," << horror->getDisquiet() << ","
                     << horror->getTraumatism() << "\n";
-            updated = true;  // Set the flag to true
+            updated = true;  
         } else {
-            // Write the original data to the temporary file
             outFile << line << endl;
         }
     }
@@ -200,11 +192,10 @@ void updateEldritchHorrorCSV(const string& filename, const EldritchHorror* horro
                 << horror->getTraumatism() << "\n";
     }
 
-    // Close both input and output files
     inFile.close();
     outFile.close();
 
-    // Replace the original file with the temporary file
-    remove(filename.c_str());  // Remove the original file
-    rename(tempFilename.c_str(), filename.c_str());  // Rename the temporary file
+
+    remove(filename.c_str()); 
+    rename(tempFilename.c_str(), filename.c_str()); 
 }

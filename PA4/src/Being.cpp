@@ -11,7 +11,6 @@ Being::~Being() {
 }
 
 
-// Set the life of the being
 void Being::setLife(int newLife) {
     life = newLife;
 }
@@ -21,7 +20,6 @@ int Being::getLife() const {
 }
 
 
-// Set the strength of the being
 void Being::setStrength(int newStrength) {
     strength = newStrength;
 }
@@ -31,7 +29,6 @@ int Being::getStrength() const {
 }
 
 
-// Set the intelligence of the being
 void Being::setIntelligence(int newIntelligence) {
     intelligence = newIntelligence;
 }
@@ -40,7 +37,6 @@ int Being::getIntelligence() const {
     return intelligence;
 }
 
-// Set the name of the being
 void Being::setName(const string& newName) {
     name = newName;
 }

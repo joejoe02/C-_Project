@@ -13,7 +13,6 @@ Person::Person(const string& name, int life, int strength, int intelligence, con
 // Destructor
 Person::~Person() {}
 
-// Getter for gender
 string Person::getGender() const {
     return gender;
 }
@@ -21,7 +20,6 @@ string Person::getGender() const {
 void Person::setGender(const string& newGender) {}
 
 
-// Getter for fear
 int Person::getFear() const {
     return fear;
 }

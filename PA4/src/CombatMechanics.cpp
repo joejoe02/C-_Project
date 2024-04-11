@@ -11,7 +11,7 @@ void CombatMechanics::performCombat(Being* attacker, Being* target, const Item& 
 
     cout << attacker->getName() << " attacks " << target->getName() << " with " << weapon.getName() << endl;
 
-    // Apply damage to the target
+    // Apply the damage to the target
     target->takeDamage(damage);
 
     cout << "Result: " << target->getName() << "'s life: " << target->getLife() << endl;

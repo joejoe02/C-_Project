@@ -2,9 +2,15 @@
 #define PERSON_H
 
 #include "Being.h"
+#include "items.h"
+#include <vector>
+#include <map>
 using namespace std;
 
 class Person : public Being {
+private:
+    std::map<ItemType, std::vector<Item>> inventory;  
+    int health;
 protected:
     string gender;
     int fear;
@@ -28,7 +34,9 @@ public:
     int getFear() const;
     // Create a person
     static Person* createPerson(); 
-
+    void addItem(const Item& item);
+    bool useItem(const std::string& itemName);
+    void adjustHealth(int amount);
     void printDetails() const override;  
 
 };

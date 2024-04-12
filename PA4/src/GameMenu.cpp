@@ -9,6 +9,7 @@
 #include <algorithm>
 #include "updateCSV.h"
 #include "ErrorCheck.h"
+#include "Items.h"
 
 using namespace std;
 
@@ -20,6 +21,7 @@ void loadCreaturesFromCSV(const string& filename);
 void loadEldritchHorrorsFromCSV(const string& filename);
 void loadAllCharacters();
 void loadAllItems(const string& filename);
+
 
 void loadAllItems(const string& filename) {
     ifstream file(filename);
@@ -316,6 +318,33 @@ void initiateCombat() {
     CombatMechanics::performCombat(attacker, target, weapon);
 }
 
+void assignItemToCharacter() {
+    cout << "Select an item to assign:" << endl;
+    for (int i = 0; i < items.size(); i++) {
+        cout << i + 1 << ". " << items[i].getName() << " - " << items[i].getDescription() << endl;
+    }
+    int itemIndex;
+    cin >> itemIndex;
+    itemIndex--;  // Adjust for 0-based index
+
+    cout << "Select a character to assign the item to:" << endl;
+    for (int i = 0; i < characters.size(); i++) {
+        cout << i + 1 << ". " << characters[i]->getName() << endl;
+    }
+    int charIndex;
+    cin >> charIndex;
+    charIndex--;  // Adjust for 0-based index
+
+    // Using dynamic_cast to check if the character can use addItem
+    Person* person = dynamic_cast<Person*>(characters[charIndex]);
+    if (person) {
+        person->addItem(items[itemIndex]);
+        cout << "Item " << items[itemIndex].getName() << " assigned to " << person->getName() << endl;
+    } else {
+        cout << "This character cannot hold items." << endl;
+    }
+}
+
 void showMainMenu() {
     int choice = 0;
     while (true) {
@@ -326,11 +355,12 @@ void showMainMenu() {
         cout << "2. Save characters to a file\n";
         cout << "3. Load characters from a file\n";
         cout << "4. Print all character details\n";
-        cout << "5. Print all Items details\n"; // Added this option to the menu
-        cout << "6. Attack\n"; // Added this option to the menu
-        cout << "7. Exit\n";
-        cout << "\nPlease, select an option (1-6): ";
-        int choice = getNumericInput(1, 7, "Please, select an option (1-7): ");
+        cout << "5. Print all Items details\n";
+        cout << "6. Assign an item to a character\n"; // New option for assigning items
+        cout << "7. Attack\n"; // Adjusted to be the next option
+        cout << "8. Exit\n"; // Adjusted exit option
+        cout << "\nPlease, select an option (1-8): ";
+        int choice = getNumericInput(1, 8, "Please, select an option (1-8): ");
 
         switch(choice) {
             case 1: {
@@ -386,15 +416,19 @@ void showMainMenu() {
                 break;
             case 4:
                 printAllCharacterDetails();
-                break; 
+                break;
             case 5:
                 loadAllItems("data/Items.csv");
                 printAllItems();
                 break;
             case 6:
-                initiateCombat();
+                // Call the function to assign items to characters
+                assignItemToCharacter();
                 break;
             case 7:
+                initiateCombat();
+                break;
+            case 8:
                 cout << "Exiting the program...\n";
                 return;
             default:

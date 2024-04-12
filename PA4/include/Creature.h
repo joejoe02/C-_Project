@@ -4,6 +4,10 @@
 #include "Being.h"
 #include <string>
 #include <map>
+#include <sstream>
+#include <iostream>
+
+using namespace std;
 
 // Forward declaration to avoid circular dependencies, if necessary
 class Being;
@@ -25,7 +29,11 @@ public:
     virtual ~Creature();
 
     void takeDamage(int damage) override {
-        life -= damage;
+        cout << "Creature taking damage" << endl;
+        if (damage > life)
+            life = 0;
+        else
+            life -= damage;
     };
 
     // Setters and getters for 'unnatural' and 'disquiet' attributes
@@ -39,6 +47,12 @@ public:
 
     // Override to print details specific to `Creature`
     void printDetails() const override;
+
+    string toCSV() const {
+        stringstream ss;
+        ss << name << "," << life << "," << strength << "," << intelligence << "," << unnatural << "," << disquiet;
+        return ss.str();
+    }
 
     // Additional creature-specific methods here...
 };

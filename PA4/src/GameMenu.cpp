@@ -14,7 +14,7 @@
 using namespace std;
 
 extern vector<Being*> characters;
-vector<Item> items;
+extern vector<Item> items;
 
 void loadCharactersFromPersonsCSV(const string& filename);
 void loadCreaturesFromCSV(const string& filename);
@@ -100,7 +100,6 @@ void loadCharactersFromPersonsCSV(const string& filename) {
             }
         }
 
-        cout << "Loading character/Investigator..." << endl;
         // Create Person or Investigator based on isInvestigator value
         if (isInvestigator) {
             characters.push_back(new Investigator(name, life, strength, intelligence, gender, fear, terror));
@@ -125,7 +124,6 @@ void loadCreaturesFromCSV(const string& filename) {
 
     string line;
     while (getline(file, line)) {
-        cout << "Loading creature from line: " << line << endl;
         stringstream ss(line);
         string name;
         int life, strength, intelligence, disquiet;
@@ -183,7 +181,6 @@ void loadEldritchHorrorsFromCSV(const string& filename) {
         ss >> traumatism;
 
         // Creating and adding the EldritchHorror object
-        cout << "Loading Eldritch Horror from line: " << line << endl;
         characters.push_back(new EldritchHorror(name, life, strength, intelligence, unnatural, disquiet, traumatism));
     }
 
@@ -207,38 +204,41 @@ void loadAllCharacters() {
 }
 
 void saveAllCharacters() {
-    // Open files for each character type. Using append mode in case you want to add to existing files.
-    ofstream personsFile("data/Person.csv", ios::app);
-    ofstream creaturesFile("data/Creature.csv", ios::app);
-    ofstream eldritchHorrorsFile("data/EldritchHorror.csv", ios::app);
+
+    const string personHeader = "Name,Life,Strength,Intelligence,Gender,Fear,IsInvestigator,Terror";
+    const string creatureHeader = "Name,Life,Strength,Intelligence,Unnatural,Disquiet";
+    const string eldritchHorrorHeader = "Name,Life,Strength,Intelligence,Unnatural,Disquiet,Traumatism";
+    // Open files for each character type in truncate mode to overwrite existing content
+    ofstream personsFile("data/Person.csv",ios::out | ios::trunc);
+    ofstream eldritchHorrorsFile("data/EldritchHorror.csv",ios::out | ios::trunc);
+    ofstream creaturesFile("data/Creature.csv",ios::out | ios::trunc);
 
     if (!personsFile || !creaturesFile || !eldritchHorrorsFile) {
         cerr << "Failed to open one or more files for writing." << endl;
         return;
     }
 
+    // Write the header line for each file
+    personsFile << personHeader << "\n";
+    creaturesFile << creatureHeader << "\n";
+    eldritchHorrorsFile << eldritchHorrorHeader << "\n";
+
     for (const auto& character : characters) {
-        if (const auto p = dynamic_cast<Person*>(character)) {
-            // Save both Person and Investigator in the same file, but add an extra field for Investigators
-            personsFile << p->getName() << "," << p->getLife() << "," << p->getStrength() << ","
-                        << p->getIntelligence() << "," << p->getGender() << "," << p->getFear();
-            if (const auto inv = dynamic_cast<Investigator*>(character)) {
-                // Append Investigator-specific fields
-                personsFile << ",true," << inv->getTerror();
-            }
-            personsFile << "\n"; // Newline to separate characters
-        } else if (const auto eh = dynamic_cast<EldritchHorror*>(character)) {
-            eldritchHorrorsFile << eh->getName() << "," << eh->getLife() << "," << eh->getStrength() << ","
-                                << eh->getIntelligence() << "," << eh->getUnnatural() << "," << eh->getDisquiet()
-                                << "," << eh->getTraumatism() << "\n";
-                                cout << "Eldritch Horror saved successfully." << endl;
-        } else if (const auto c = dynamic_cast<Creature*>(character)) {
-            creaturesFile << c->getName() << "," << c->getLife() << "," << c->getStrength() << ","
-                          << c->getIntelligence() << "," << c->getUnnatural() << "," << c->getDisquiet() << "\n";
-                          cout << "Creature saved successfully." << endl;
-        
-        }
+    if (const auto inv = dynamic_cast<Investigator*>(character)) {
+        // Save as Investigator if the dynamic cast succeeds
+        personsFile << inv->toCSV() << "\n";
+    } else if (const auto p = dynamic_cast<Person*>(character)) {
+        // Save as Person if it's not an Investigator
+        personsFile << p->toCSV() << "\n";
+    } else if (const auto eh = dynamic_cast<EldritchHorror*>(character)) {
+        // Save eldritch horrors
+        cout << "Saving Eldritch Horror: " << eh->getName() << endl;
+        eldritchHorrorsFile << eh->toCSV() << "\n";
+    } else if (const auto c = dynamic_cast<Creature*>(character)) {
+        // Save creatures
+        creaturesFile << c->toCSV() << "\n";
     }
+}
 
     // Close the files
     personsFile.close();
@@ -246,9 +246,9 @@ void saveAllCharacters() {
     eldritchHorrorsFile.close();
 
 
-
     cout << "All characters saved successfully." << endl;
 }
+
 
 void printAllCharacterDetails() {
     for (const auto& character : characters) {
@@ -256,66 +256,9 @@ void printAllCharacterDetails() {
     }
 }
 
-void printAllItems() {
-    cout << "Items\n";
-    cout << "---------------------------------------------------------------\n"; // Header
-    for (const Item& item : items) {
-        cout << "Name           : " << item.getName() << "\n";
-        cout << "Type           : " << static_cast<int>(item.getType()) << "\n";
-        cout << "Description    : " << item.getDescription() << "\n";
-        cout << "Effect Strength: " << item.getEffectStrength() << "\n";
-        cout << "Effect Fear    : " << item.getEffectFear() << "\n";
-        cout << "---------------------------------------------------------------\n"; // Separator
-    }
-
-}
-
-void initiateCombat() {
-    cout << "Initiating combat...\n";
-
-    // Display the list of characters with numbers
-    cout << "Available characters:\n";
-    for (size_t i = 0; i < characters.size(); ++i) {
-        cout << i + 1 << ". " << characters[i]->getName() << endl;
-    }
-
-    // Select the attacker
-    cout << "Select the attacker (enter the corresponding number): ";
-    int attackerIndex;
-    cin >> attackerIndex;
-    cin.ignore(); // Ignore newline character
-    if (attackerIndex < 1 || attackerIndex > characters.size()) {
-        cout << "Invalid attacker selection.\n";
-        return;
-    }
-    Being* attacker = characters[attackerIndex - 1];
-
-    // Select the target
-    cout << "Select the target (enter the corresponding number): ";
-    int targetIndex;
-    cin >> targetIndex;
-    cin.ignore(); // Ignore newline character
-    if (targetIndex < 1 || targetIndex > characters.size() || targetIndex == attackerIndex) {
-        cout << "Invalid target selection.\n";
-        return;
-    }
-    Being* target = characters[targetIndex - 1];
-
-    // Display attacker and target details
-    cout << "Attacker: " << attacker->getType() << " " << attacker->getName() << "\n" << endl;
-    cout << "Target: " << target->getName() << " (Life: " << target->getLife() << "\n";
-    
-    // Check if the attacker is a Person and display fear
-    if (auto person = dynamic_cast<Person*>(attacker)) {
-        cout << ", Fear: " << person->getFear();
-    }
-    cout << ")\n";
-
-    // Choose a weapon (you can implement this part if needed)
-    Item weapon = CombatMechanics::chooseWeapon(items);
-
-    // Perform combat
-    CombatMechanics::performCombat(attacker, target, weapon);
+void startCombat() {
+    cout << "Starting combat...\n";
+    CombatMechanics::performCombat(characters, items);
 }
 
 void assignItemToCharacter() {
@@ -348,91 +291,92 @@ void assignItemToCharacter() {
 void showMainMenu() {
     int choice = 0;
     while (true) {
-        cout << "=====================================\n";
-        cout << "           MAIN MENU\n";
-        cout << "=====================================\n";
-        cout << "1. Create a character\n";
-        cout << "2. Save characters to a file\n";
-        cout << "3. Load characters from a file\n";
-        cout << "4. Print all character details\n";
-        cout << "5. Print all Items details\n";
-        cout << "6. Assign an item to a character\n"; // New option for assigning items
-        cout << "7. Attack\n"; // Adjusted to be the next option
-        cout << "8. Exit\n"; // Adjusted exit option
-        cout << "\nPlease, select an option (1-8): ";
-        int choice = getNumericInput(1, 8, "Please, select an option (1-8): ");
+        cout << "\n=====================================\n"
+             << "           MAIN MENU\n"
+             << "=====================================\n"
+             << "1. Create a character\n"
+             << "2. Load all characters (if you have created a new character in session)\n"
+             << "3. Print all character details\n"
+             << "4. Print all items details\n"
+             << "5. Assign an item to a character\n"
+             << "6. Initiate turn-based combat\n"
+             << "7. Exit\n"
+             << "\nPlease, select an option (1-7): ";
 
+        choice = getNumericInput(1, 7, "Please, select an option (1-7): ");
         switch(choice) {
-            case 1: {
-                cout << "\n=====================================\n";
-                cout << "       CREATE A CHARACTER\n";
-                cout << "=====================================\n";
-                cout << "1. Create a person\n";
-                cout << "2. Create an investigator\n";
-                cout << "3. Create a creature\n";
-                cout << "4. Create an eldritch horror\n";
-                cout << "5. Back to main menu\n";
-                cout << "\nSelect the type of character to create (1-5): ";
-                int creationChoice = getNumericInput(1, 5, "Select the type of character to create (1-5): ");
-
-                switch(creationChoice) {
-                    case 1: {
-                        cout << "Creating a Person...\n";
-                        Person* newPerson = Person::createPerson();
-                        characters.push_back(newPerson);
-                        break;
-                    }
-                    case 2: {
-                        cout << "Creating an Investigator...\n";
-                        Investigator* newInvestigator = Investigator::createInvestigator();
-                        characters.push_back(newInvestigator);
-                        break;
-                    }
-                    case 3: {
-                        cout << "Creating a Creature...\n";
-                        Creature* newCreature = Creature::createCreature();
-                        characters.push_back(newCreature);
-                        break;
-                    }
-                    case 4: {
-                        cout << "Creating an Eldritch Horror...\n";
-                        EldritchHorror* newHorror = EldritchHorror::createEldritchHorror();
-                        characters.push_back(newHorror);
-                        break;
-                    }
-                    case 5:
-                        break; // Go back to main menu
-                    default:
-                        cout << "Invalid choice. Please try again.\n";
-                }
+            case 1:
+                createCharacter();
                 break;
-            }
             case 2:
-                saveAllCharacters();
-                break;
-            case 3:
                 loadAllCharacters();
                 cout << "All characters loaded from CSV files.\n";
                 break;
-            case 4:
+            case 3:
                 printAllCharacterDetails();
                 break;
-            case 5:
+            case 4:
                 loadAllItems("data/Items.csv");
-                printAllItems();
+                displayItems();
                 break;
-            case 6:
-                // Call the function to assign items to characters
+            case 5:
                 assignItemToCharacter();
                 break;
-            case 7:
-                initiateCombat();
+            case 6:
+                startCombat();
                 break;
-            case 8:
+            case 7:
                 cout << "Exiting the program...\n";
-                return;
+                return; // Exit the program
             default:
                 cout << "Invalid choice. Please try again.\n";
+        }
+    }
+}
+
+// Example implementation for a function to create a character
+void createCharacter() {
+    cout << "\n=====================================\n"
+         << "       CREATE A CHARACTER\n"
+         << "=====================================\n"
+         << "1. Create a person\n"
+         << "2. Create an investigator\n"
+         << "3. Create a creature\n"
+         << "4. Create an eldritch horror\n"
+         << "5. Back to main menu\n"
+         << "\nSelect the type of character to create (1-5): ";
+    
+    int creationChoice = getNumericInput(1, 5, "Select the type of character to create (1-5): ");
+    switch(creationChoice) {
+        case 1:
+            cout << "Creating a Person...\n";
+            characters.push_back(Person::createPerson());
+            break;
+        case 2:
+            cout << "Creating an Investigator...\n";
+            characters.push_back(Investigator::createInvestigator());
+            break;
+        case 3:
+            cout << "Creating a Creature...\n";
+            characters.push_back(Creature::createCreature());
+            break;
+        case 4:
+            cout << "Creating an Eldritch Horror...\n";
+            characters.push_back(EldritchHorror::createEldritchHorror());
+            break;
+        case 5:
+            cout << "Returning to main menu.\n";
+            break;
+        default:
+            cout << "Invalid choice. Please try again.\n";
+    }
+    if (creationChoice >= 1 && creationChoice <= 4) {
+        cout << "Save new character? (y/n): ";
+        char saveChoice;
+        cin >> saveChoice;
+        if (tolower(saveChoice) == 'y') {
+            saveAllCharacters();
+            cout << "Characters saved.\n";
         }
     }
 }

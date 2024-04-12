@@ -9,5 +9,6 @@
 #include "Items.h"
 #include "CombatMechanics.h"
 #include "updateCSV.h"
+#include "ErrorCheck.h"
 
 #endif // GAME_ENTITIES_H

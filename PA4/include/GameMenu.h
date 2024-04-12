@@ -5,22 +5,21 @@
 #include <string>
 #include "GameEntities.h" // Includes Being, Person, Creature, etc.
 
-extern std::vector<Being*> characters;
-extern std::vector<Item> items;
+using namespace std;
 
-void savePerson(const Person* person);
-void saveInvestigator(const Investigator* investigator);
-void saveCreature(const Creature* creature);
-void saveEldritchHorror(const EldritchHorror* eldritchHorror);
 
-void loadCharactersFromPersonsCSV(const std::string& filename);
-void loadCreaturesFromCSV(const std::string& filename);
-void loadEldritchHorrorsFromCSV(const std::string& filename);
+extern vector<Being*> characters;
+extern vector<Item> items;
+
+
+void loadCharactersFromPersonsCSV(const string& filename);
+void loadCreaturesFromCSV(const string& filename);
+void loadEldritchHorrorsFromCSV(const string& filename);
 
 void loadAllCharacters();
 void showMainMenu();
-
-void loadAllItems(const std::string& filename);
+void createCharacter();
+void loadAllItems(const string& filename);
 void displayItems();
 
 static int getNumericInput(int min, int max);

@@ -24,7 +24,6 @@ EldritchHorror* EldritchHorror::createEldritchHorror() {
     int strength = rand() % 11;
     int intelligence = rand() % 11;
     int traumatism = rand() % 4;  // 0-3
-
     return new EldritchHorror(name, life, strength, intelligence, true, 10, traumatism);
 }
 

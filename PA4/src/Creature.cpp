@@ -19,8 +19,7 @@ Creature::Creature(const std::string& type, const std::string& name, int life, i
 }
 
 Creature::~Creature() {
-    // Any cleanup code specific to Creature would go here.
-    // If there's no specific cleanup needed, this can be left empty.
+
 }
 
 
@@ -31,7 +30,6 @@ std::string Creature::generateName(const std::string& type) {
 }
 
 void Creature::setName(const std::string& newName) {
-    // Implementation, assuming 'name' is a member variable of 'Being' or 'Creature'
     this->name = newName;
 }
 

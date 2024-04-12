@@ -5,6 +5,7 @@
 #include "items.h"
 #include <vector>
 #include <map>
+#include <sstream>
 using namespace std;
 
 class Person : public Being {
@@ -37,7 +38,12 @@ public:
     void addItem(const Item& item);
     bool useItem(const std::string& itemName);
     void adjustHealth(int amount);
-    void printDetails() const override;  
+    void printDetails() const override;
+    string toCSV() const {
+        stringstream ss;
+        ss << name << "," << life << "," << strength << "," << intelligence << "," << gender << "," << fear;
+        return ss.str();
+    }
 
 };
 

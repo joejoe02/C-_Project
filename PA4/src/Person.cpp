@@ -36,8 +36,8 @@ void Person::setFear(int newFear) {
 
 // Static method to create a person with random attributes
 Person* Person::createPerson() {
-    string name = getStringInput("\nEnter the name of the person: ");
-    string gender = getStringInput("\nEnter gender: ");
+    string name = getStringInput("Enter the name of the person: ");
+    string gender = getStringInput("Enter gender: ");
     int life = rand() % 11;  // Life (0-10)
     int strength = rand() % 11;  // Strength (0-10)
     int intelligence = rand() % 11;  // Intelligence (0-10)
@@ -81,5 +81,3 @@ void Person::printDetails() const {
     cout << "Fear          : " << getFear() << "\n";
     cout << "---------------------------------------------------------------\n";
 }
-
-// Implement other necessary member functions as needed

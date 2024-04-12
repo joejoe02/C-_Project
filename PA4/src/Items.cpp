@@ -1,4 +1,6 @@
 #include "Items.h"
+#include <iostream>
+#include <vector>
 
 
 using namespace std;
@@ -37,16 +39,17 @@ ItemType stringToItemType(const string& type) {
         return ItemType::Undefined;
     }
 }
+extern vector<Item> items;
 
-// void displayItems() {
-//     cout << "Items\n";
-//     cout << "---------------------------------------------------------------\n"; // Header
-//     for (const Item& item : items) {
-//         cout << "Name           : " << item.getName() << "\n";
-//         cout << "Type           : " << static_cast<int>(item.getType()) << "\n";
-//         cout << "Description    : " << item.getDescription() << "\n";
-//         cout << "Effect Strength: " << item.getEffectStrength() << "\n";
-//         cout << "Effect Fear    : " << item.getEffectFear() << "\n";
-//         cout << "---------------------------------------------------------------\n"; // Separator
-//     }
-// }
+void displayItems() {
+    cout << "Items\n";
+    cout << "---------------------------------------------------------------\n"; // Header
+    for (const Item& item : items) {
+        cout << "Name           : " << item.getName() << "\n";
+        cout << "Type           : " << static_cast<int>(item.getType()) << "\n";
+        cout << "Description    : " << item.getDescription() << "\n";
+        cout << "Effect Strength: " << item.getEffectStrength() << "\n";
+        cout << "Effect Fear    : " << item.getEffectFear() << "\n";
+        cout << "---------------------------------------------------------------\n"; // Separator
+    }
+}

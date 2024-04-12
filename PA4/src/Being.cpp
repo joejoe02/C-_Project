@@ -46,6 +46,7 @@ string Being::getName() const {
 }
 
 void Being::takeDamage(int damage) {
+    cout << "The takeDamage function is being called from the Being class\n" << endl;
     if (damage > life) {
         life = 0;
     } else {

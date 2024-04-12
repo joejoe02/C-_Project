@@ -2,11 +2,12 @@
 #define INVESTIGATOR_H
 
 #include "Person.h"
+#include <sstream>
 using namespace std;
 
 class Investigator : public Person {
 private:
-    int terror; // scale 0-3
+    int terror; 
 
 public:
     // Constructor
@@ -24,6 +25,12 @@ public:
     static Investigator* createInvestigator();
 
     void printDetails() const override;
+
+    string toCSV() const {
+        stringstream ss;
+        ss << Person::toCSV() << "," << "true" << "," << terror;
+        return ss.str();
+    }
 };
 
 #endif // INVESTIGATOR_H

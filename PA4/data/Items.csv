@@ -1,6 +1,10 @@
 Name,Type,Description,effectStrength,effectFear
+Fists,Weapon,The weapons you were born with,0,0
 Sword of Courage,Weapon,A sturdy sword that emboldens the wielder,5,-2
-Ancient Spellbook,Spellbook,A tome containing forgotten spells,0,0
-Healing Potion,Potion,A small vial that restores health,0,10
-Fireball Scroll,Spellbook,A scroll that allows casting a powerful fireball,10,0
+Ancient Spellbook,Spellbook,A tome containing forgotten spells,3,0
+Fireball Scroll,Spellbook,A scroll that allows casting a powerful fireball,10,5
 Elixir of Might,Potion,A potion that temporarily increases strength,7,0
+Magic Staff,Weapon,A staff that can be used to cast spells,2,0
+The Bible,Spellbook,A holy book that can be used to banish evil,5,-5
+Car,Weapon,A car that can be used to run over enemies,8,0
+Mjolnir,Weapon,A hammer that can be used to smite foes,10,0

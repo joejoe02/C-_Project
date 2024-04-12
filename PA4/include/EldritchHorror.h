@@ -24,6 +24,12 @@ public:
     static EldritchHorror* createEldritchHorror();
 
     void printDetails() const override;
+
+    string toCSV() const {
+        stringstream ss;
+        ss << Creature::toCSV() << "," << traumatism;
+        return ss.str();
+    }
 };
 
 #endif // ELDRITCHHORROR_H

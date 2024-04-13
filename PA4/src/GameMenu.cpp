@@ -261,32 +261,6 @@ void startCombat() {
     CombatMechanics::performCombat(characters, items);
 }
 
-void assignItemToCharacter() {
-    cout << "Select an item to assign:" << endl;
-    for (int i = 0; i < items.size(); i++) {
-        cout << i + 1 << ". " << items[i].getName() << " - " << items[i].getDescription() << endl;
-    }
-    int itemIndex;
-    cin >> itemIndex;
-    itemIndex--;  // Adjust for 0-based index
-
-    cout << "Select a character to assign the item to:" << endl;
-    for (int i = 0; i < characters.size(); i++) {
-        cout << i + 1 << ". " << characters[i]->getName() << endl;
-    }
-    int charIndex;
-    cin >> charIndex;
-    charIndex--;  // Adjust for 0-based index
-
-    // Using dynamic_cast to check if the character can use addItem
-    Person* person = dynamic_cast<Person*>(characters[charIndex]);
-    if (person) {
-        person->addItem(items[itemIndex]);
-        cout << "Item " << items[itemIndex].getName() << " assigned to " << person->getName() << endl;
-    } else {
-        cout << "This character cannot hold items." << endl;
-    }
-}
 
 void showMainMenu() {
     int choice = 0;
@@ -298,12 +272,10 @@ void showMainMenu() {
              << "2. Load all characters (if you have created a new character in session)\n"
              << "3. Print all character details\n"
              << "4. Print all items details\n"
-             << "5. Assign an item to a character\n"
-             << "6. Initiate turn-based combat\n"
-             << "7. Exit\n"
-             << "\nPlease, select an option (1-7): ";
+             << "5. Battle!\n"
+             << "6. Exit\n";
 
-        choice = getNumericInput(1, 7, "Please, select an option (1-7): ");
+        choice = getNumericInput(1, 6, "Please enter your choice (1-6):");
         switch(choice) {
             case 1:
                 createCharacter();
@@ -316,16 +288,12 @@ void showMainMenu() {
                 printAllCharacterDetails();
                 break;
             case 4:
-                loadAllItems("data/Items.csv");
                 displayItems();
                 break;
             case 5:
-                assignItemToCharacter();
-                break;
-            case 6:
                 startCombat();
                 break;
-            case 7:
+            case 6:
                 cout << "Exiting the program...\n";
                 return; // Exit the program
             default:
@@ -343,8 +311,7 @@ void createCharacter() {
          << "2. Create an investigator\n"
          << "3. Create a creature\n"
          << "4. Create an eldritch horror\n"
-         << "5. Back to main menu\n"
-         << "\nSelect the type of character to create (1-5): ";
+         << "5. Back to main menu\n";
     
     int creationChoice = getNumericInput(1, 5, "Select the type of character to create (1-5): ");
     switch(creationChoice) {

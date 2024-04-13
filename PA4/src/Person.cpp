@@ -46,29 +46,7 @@ Person* Person::createPerson() {
     return new Person(name, life, strength, intelligence, gender, fear);
 }
 
-void Person::addItem(const Item& item) {
-    inventory[item.getType()].push_back(item);
-}
 
-bool Person::useItem(const std::string& itemName) {
-    auto& items = inventory[ItemType::Potion];
-    for (auto it = items.begin(); it != items.end(); ++it) {
-        if (it->getName() == itemName && it->getType() == ItemType::Potion) {
-            adjustHealth(it->getEffectStrength());  // Assuming adjustHealth modifies health
-            items.erase(it);  // Remove the item after use
-            cout << "Used " << itemName << ", health adjusted." << endl;
-            return true;
-        }
-    }
-    cout << "No potion named " << itemName << " found in inventory." << endl;
-    return false;
-}
-
-
-void Person::adjustHealth(int amount) {
-    this->health += amount;
-    std::cout << "Health adjusted by " << amount << ". Current health: " << this->health << std::endl;
-}
 
 
 void Person::printDetails() const {

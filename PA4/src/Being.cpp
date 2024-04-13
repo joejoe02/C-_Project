@@ -1,6 +1,10 @@
 #include "Being.h"
+#include "GameEntities.h"
 #include <iostream>
+#include <vector>
+#include <algorithm>
 using namespace std;
+
 
 // Constructor
 Being::Being(int life, int strength, int intelligence, const string& name) : life(life), strength(strength), intelligence(intelligence), name(name) {
@@ -46,7 +50,6 @@ string Being::getName() const {
 }
 
 void Being::takeDamage(int damage) {
-    cout << "The takeDamage function is being called from the Being class\n" << endl;
     if (damage > life) {
         life = 0;
     } else {

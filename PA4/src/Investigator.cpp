@@ -31,5 +31,5 @@ Investigator* Investigator::createInvestigator() {
 void Investigator::printDetails() const {
     Person::printDetails();
     cout << "Terror         : " << getTerror() << "\n";
-    cout << "---------------------------------------------------------------\n"; // Footer
+    cout << "---------------------------------------------------------------\n";
 }

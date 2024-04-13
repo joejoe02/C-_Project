@@ -1,4 +1,4 @@
-Use this command to compile the program:
+Use this command to compile the program (cd inside the PA4 directory):
 g++ -o game src/main.cpp src/Being.cpp src/Person.cpp src/Creature.cpp src/EldritchHorror.cpp src/Investigator.cpp src/GameMenu.cpp src/Items.cpp src/CombatMechanics.cpp src/updateCSV.cpp src/ErrorCheck.cpp -Iinclude
 
 After compiling, run the program with this command:

@@ -55,13 +55,13 @@ void CombatMechanics::performCombat(vector<Being*>& characters, vector<Item>& it
         int choice;
         cin >> choice;
 
-        // If the user tries to flee and fails he forfeits his turn
+        // If the user tries to flee and fails he attacks
         if (choice == 2) {
             if (rand() % 100 < 40) { // 40% chance to successfully flee
                 cout << attacker->getName() << " successfully fled the battle!\n";
-                return; // End combat
+                break; // End combat
             } else {
-                cout << attacker->getName() << " failed to flee and lost his turn!\n";
+                cout << attacker->getName() << " failed to flee the battle!\n\n";
             }
         }
 
@@ -73,6 +73,9 @@ void CombatMechanics::performCombat(vector<Being*>& characters, vector<Item>& it
             }
         }
         int damage = calculateDamage(attacker, target, weapon);
+        if (damage > target->getLife()) {
+            damage = target->getLife();
+        }
         target->takeDamage(damage);
 
         cout << attacker->getName() << " attacks " << target->getName()
@@ -86,8 +89,8 @@ void CombatMechanics::performCombat(vector<Being*>& characters, vector<Item>& it
             break;
         }
 
-        swap(attacker, target); // Swap roles for next turn
         cout << "\nNow " << target->getName() << " is the attacker and " << attacker->getName() << " is the target.\n";
+        swap(attacker, target); // Swap roles
         
         if (attacker->getLife() <= 0) {
             cout << attacker->getName() << " has been defeated!\n";
@@ -102,6 +105,10 @@ int CombatMechanics::calculateDamage(Being* attacker, Being* target, const Item&
 
     // If target is being attacked by a weapon with fear effect, reduce target's intelligence
     if (weapon.getEffectFear() > 0) {
+        if (weapon.getEffectFear() > target->getIntelligence()) { // Ensure that intelligence is not negative
+            target->setIntelligence(0);
+            cout << target->getName() << "'s intelligence reduced to 0 due to fear effect.\n";
+        }
         target->setIntelligence(target->getIntelligence() - weapon.getEffectFear());
         cout << target->getName() << "'s intelligence reduced by " << weapon.getEffectFear() << " due to fear effect.\n";
     }
@@ -127,11 +134,11 @@ int CombatMechanics::calculateDamage(Being* attacker, Being* target, const Item&
     if (weapon.getName() == "Mjolnir") {
         cout << target->getName() << " is stunned by Mjolnir and cannot attack!\n";
     }
-        
 
+    
 
     // Calculate the modified damage
-    baseDamage -= target->getStrength() + (target->getIntelligence() / 3);
+    baseDamage -= target->getStrength() + (target->getIntelligence() / 3); 
     baseDamage = max(0, baseDamage); // Ensure that the damage is not negative
 
     return baseDamage;

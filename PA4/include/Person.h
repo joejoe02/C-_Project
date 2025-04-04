@@ -18,7 +18,7 @@ protected:
 
 public:
     Person(const string& name, int life, int strength, int intelligence, const string& gender, int fear);
-    virtual ~Person(); // Just declare the destructor
+    virtual ~Person();
 
     string getType() const override { return "Person";}
 

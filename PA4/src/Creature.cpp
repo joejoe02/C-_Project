@@ -65,7 +65,7 @@ Creature* Creature::createCreature() {
 
 
 void Creature::printDetails() const {
-    Being::printDetails(); // Call base class implementation
+    Being::printDetails(); 
 
     // Add Creature-specific details
     cout << "Unnatural     : " << (unnatural ? "Yes" : "No") << "\n";

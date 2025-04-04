@@ -29,9 +29,9 @@ EldritchHorror* EldritchHorror::createEldritchHorror() {
 
 
 void EldritchHorror::printDetails() const {
-    Creature::printDetails(); // Call to Creature's printDetails to print common details
+    Creature::printDetails();
 
     cout << "Traumatism     : " << getTraumatism() << "\n";
-    cout << "---------------------------------------------------------------\n"; // Footer
+    cout << "---------------------------------------------------------------\n"; 
 }
 

@@ -1,3 +1,6 @@
 Name,Life,Strength,Intelligence,Gender,Fear,IsInvestigator,Terror
-Nurse,2,2,9,Male,2
-Reporter,0,2,10,Male,3,true,3
+Nurse,0,2,4,Male,2,false,0
+Reporter,8,2,10,Male,3,true,3
+Detective,8,9,8,Female,0
+Doctor,7,3,10,Male,3
+Gabriel Breki,8,2,6,Male,4,true,3

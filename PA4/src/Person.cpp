@@ -10,12 +10,10 @@ using namespace std;
 // Person constructor implementation
 Person::Person(const string& name, int life, int strength, int intelligence, const string& gender, int fear)
 : Being(life, strength, intelligence, name), gender(gender), fear(fear) {
-    // Constructor initializes the person with the provided attributes
 }
 
 // Destructor
 Person::~Person() {
-    // Destructor to handle any cleanup if necessary
 }
 
 string Person::getGender() const {

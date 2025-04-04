@@ -9,7 +9,6 @@
 
 class CombatMechanics {
 public:
-    // Function to handle combat between characters
     static void performCombat(vector<Being*>& characters, vector<Item>& items);
     static Item chooseWeapon(const vector<Item>& items);
     static Being* chooseAttacker(const vector<Being*>& characters);
